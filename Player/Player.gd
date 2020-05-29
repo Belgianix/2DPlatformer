@@ -35,6 +35,7 @@ func _physics_process(delta: float) -> void:
 	_wall_slide(delta)
 	_dash(x_input)
 	_crouch_n_slide(x_input)
+	print("Github Test")
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
