@@ -15,6 +15,7 @@ export var dash_factor = 1
 export var MAX_DASH_SPEED = 250
 export var SLIDE_FRICTION = 0.85
 export var crouch_speed_reduction = 1
+export var max_stamina = 5
 
 var velocity = Vector2.ZERO
 var dashing = false
@@ -26,6 +27,10 @@ var is_sliding = false
 
 onready var sprite = $Sprite
 onready var collisionShape = $CollisionShape2D
+onready var stamina = max_stamina
+
+signal stamina_changed(stamina)
+signal stamina_refilled(stamina)
 
 func _physics_process(delta: float) -> void:
 	var x_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -35,7 +40,6 @@ func _physics_process(delta: float) -> void:
 	_wall_slide(delta)
 	_dash(x_input)
 	_crouch_n_slide(x_input)
-	print("Github Test")
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -69,6 +73,8 @@ func _jump(x_input, delta):
 	if is_on_floor() or is_next_to_wall():
 		can_dash = true
 	if is_on_floor():
+		stamina = max_stamina
+		emit_signal("stamina_refilled")
 		can_jump = true
 		if jump_was_pressed:
 			velocity.y = -JUMP_FORCE
@@ -82,13 +88,17 @@ func _gravity(delta):
 
 func _wall_jump(delta):
 	if not is_on_floor() and Input.is_action_just_pressed("jump"):
-		if is_next_to_right_wall():
+		if is_next_to_right_wall() and stamina > 0:
 			velocity = lerp(velocity, Vector2(-WALL_JUMP_FORCE, -WALL_JUMP_FORCE -50), WALL_JUMP_ACCELERATION * delta)
 			sprite.flip_h = true
 
-		if is_next_to_left_wall():
+		if is_next_to_left_wall() and stamina > 0:
 			velocity = lerp(velocity, Vector2(WALL_JUMP_FORCE, -WALL_JUMP_FORCE -50), WALL_JUMP_ACCELERATION * delta)
 			sprite.flip_h = false
+			
+		if is_next_to_wall():
+			stamina -= 1
+			emit_signal("stamina_changed", stamina, max_stamina)
 
 func _wall_slide(delta):
 	if is_next_to_wall() and velocity.y >= 0:
@@ -101,6 +111,8 @@ func _dash(x_input):
 	if Input.is_action_pressed("dash") and can_dash:
 		if x_input != 0 and dash_cooldown_over:
 			dash_cooldown()
+			stamina -= 1
+			emit_signal("stamina_changed", stamina, max_stamina)
 			can_dash = false
 			dash_factor = 5
 			velocity.y = 0
