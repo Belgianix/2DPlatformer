@@ -2,7 +2,6 @@
 
 [ext_resource path="res://World/Textures/trampoline.png" type="Texture" id=1]
 
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.11059
 height = 8.8247

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player/Character_standing.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -11,8 +11,12 @@
 [ext_resource path="res://Player/Character_rc3.png" type="Texture" id=9]
 [ext_resource path="res://Player/Character_rc2.png" type="Texture" id=10]
 [ext_resource path="res://Player/Character_rc1.png" type="Texture" id=11]
+[ext_resource path="res://World/bg1.png" type="Texture" id=12]
+[ext_resource path="res://World/bg2.png" type="Texture" id=13]
+[ext_resource path="res://World/bg3.png" type="Texture" id=14]
+[ext_resource path="res://World/sky.png" type="Texture" id=15]
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": false,
@@ -25,13 +29,13 @@ animations = [ {
 "speed": 7.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 3.11307, 7.7548 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 2.99241, 7.22957 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 3.463, 1.23064 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -41,12 +45,12 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 4 )
+frames = SubResource( 1 )
 animation = "Idle"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="RayCastTopRight" type="RayCast2D" parent="."]
 position = Vector2( 0, -7 )
@@ -74,7 +78,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( -0.483604, 0.0537338 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 offset = Vector2( 2, 2 )
@@ -102,12 +106,63 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TrampolineBounce"]
 position = Vector2( -0.691048, 6.91045 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.6, 0.6 )
+limit_left = 0
+limit_top = 0
+limit_bottom = 350
+limit_smoothed = true
 smoothing_enabled = true
+smoothing_speed = 7.0
+editor_draw_limits = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 400, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 12 )
+centered = false
+offset = Vector2( 0, -70 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 400, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource( 13 )
+centered = false
+offset = Vector2( 0, 18 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.8, 0.8 )
+motion_mirroring = Vector2( 400, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource( 14 )
+centered = false
+offset = Vector2( 0, 89 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 400, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer4"]
+margin_left = -100.0
+margin_top = -336.0
+margin_right = 300.0
+margin_bottom = -66.0
+texture = ExtResource( 15 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="stamina_changed" from="." to="CanvasLayer/StaminaUI/TextureProgress" method="_on_Player_stamina_changed"]
 [connection signal="stamina_refilled" from="." to="CanvasLayer/StaminaUI/TextureProgress" method="_on_Player_stamina_refilled"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

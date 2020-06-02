@@ -2,7 +2,6 @@
 
 [ext_resource path="res://World/Textures/Spikes.png" type="Texture" id=1]
 
-
 [node name="Spikes" type="Area2D"]
 position = Vector2( 8, 0 )
 collision_layer = 0
@@ -14,6 +13,5 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2( 0, 8 )
 polygon = PoolVector2Array( -7.53221, 7.94408, -7.53221, 6.01323, -3.69809, 0.30342, 0.356701, 6.34423, 4.38391, 0.248252, 7.33535, 6.31665, 7.33535, 7.99925 )

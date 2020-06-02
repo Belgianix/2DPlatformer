@@ -8,7 +8,7 @@ export var ACCELERATION = 10
 export var FRICTION = 15
 export var AIR_RESISTANCE = 1.5
 export var JUMP_FORCE = 150
-export var WALL_JUMP_FORCE = 120
+export var WALL_JUMP_FORCE = 150
 export var WALL_JUMP_ACCELERATION = 55
 export var dash_velocity = 200
 export var dash_factor = 1
@@ -16,7 +16,7 @@ export var MAX_DASH_SPEED = 250
 export var SLIDE_FRICTION = 0.85
 export var crouch_speed_reduction = 1
 export var MAX_STAMINA = 5
-export var TRAMPOLINE_BOUNCE_HEIGHT = 300
+export var TRAMPOLINE_BOUNCE_HEIGHT = 305
 
 var velocity = Vector2.ZERO
 var dashing = false

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Liane2.png-b9efef02c44bb4c456d119987a58487c.stex"
+path="res://.import/dirt.png-324cd818a43e226d9e17efb0a369af14.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Textures/Liane2.png"
-dest_files=[ "res://.import/Liane2.png-b9efef02c44bb4c456d119987a58487c.stex" ]
+source_file="res://World/Textures/dirt.png"
+dest_files=[ "res://.import/dirt.png-324cd818a43e226d9e17efb0a369af14.stex" ]
 
 [params]
 
