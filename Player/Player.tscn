@@ -1,34 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/CharacterAvatar.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Player/StaminaGUI.gd" type="Script" id=3]
+[ext_resource path="res://ready pngs/bar_border.png" type="Texture" id=4]
+[ext_resource path="res://ready pngs/bar_background.png" type="Texture" id=5]
+[ext_resource path="res://ready pngs/bar_filling.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.11307, 7.7548 )
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0.295775 )
-colors = PoolColorArray( 0.657403, 0.336847, 0.907715, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="StyleBoxTexture" id=4]
-texture = SubResource( 3 )
-region_rect = Rect2( 0, 0, 2048, 1 )
-modulate_color = Color( 0.372549, 0.12549, 0.286275, 1 )
-
-[sub_resource type="Gradient" id=5]
-offsets = PoolRealArray( 0.380282 )
-colors = PoolColorArray( 0.0810518, 0.00530624, 0.104492, 1 )
-
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
-
-[sub_resource type="StyleBoxTexture" id=7]
-texture = SubResource( 6 )
-region_rect = Rect2( 0, 0, 2048, 1 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -60,30 +40,24 @@ enabled = true
 cast_to = Vector2( 4, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2( 2, 2 )
+transform = Transform2D( 1, 0, 0, 1, 2, 2 )
 
 [node name="StaminaUI" type="HBoxContainer" parent="CanvasLayer"]
 margin_right = 35.0
 margin_bottom = 14.0
+rect_scale = Vector2( 2, 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/StaminaUI"]
-margin_right = 35.0
-margin_bottom = 13.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/fg = SubResource( 4 )
-custom_styles/bg = SubResource( 7 )
-max_value = 100.0
-step = 0.0
-value = 100.0
-rounded = true
-percent_visible = false
+[node name="TextureProgress" type="TextureProgress" parent="CanvasLayer/StaminaUI"]
+margin_right = 32.0
+margin_bottom = 16.0
+texture_under = ExtResource( 5 )
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 6 )
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -97,5 +71,5 @@ drag_margin_top = 0.1
 drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 editor_draw_drag_margin = true
-[connection signal="stamina_changed" from="." to="CanvasLayer/StaminaUI/ProgressBar" method="_on_Player_stamina_changed"]
-[connection signal="stamina_refilled" from="." to="CanvasLayer/StaminaUI/ProgressBar" method="_on_Player_stamina_refilled"]
+[connection signal="stamina_changed" from="." to="CanvasLayer/StaminaUI/TextureProgress" method="_on_Player_stamina_changed"]
+[connection signal="stamina_refilled" from="." to="CanvasLayer/StaminaUI/TextureProgress" method="_on_Player_stamina_refilled"]
