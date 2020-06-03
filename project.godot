@@ -75,6 +75,12 @@ respawn={
 2d_physics/layer_4="Trampoline"
 2d_physics/layer_5="Player"
 
+[locale]
+
+translation_remaps={
+
+}
+
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
